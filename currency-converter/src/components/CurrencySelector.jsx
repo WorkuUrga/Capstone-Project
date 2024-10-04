@@ -4,7 +4,16 @@ import { FaStar } from "react-icons/fa";
 import currencyToCountryMap from './currencyMap'; // Import your mapping
 
 /* CurrencySelector component for selecting currencies with favorite options.
-*/
+ * Props:
+ * - label: The label for the currency selector.
+ * - currencies: An array of available currency options.
+ * - selectedCurrency: The currently selected currency.
+ * - onCurrencyChange: Callback function to handle currency selection changes.
+ * - favorites: An array of favorite currencies.
+ * - toggleFavorite: Function to add/remove currencies from favorites.
+ * - isDark: Boolean indicating if dark mode is enabled.
+ */
+
 function CurrencySelector({ label, currencies, selectedCurrency, onCurrencyChange, favorites, toggleFavorite, isDark }) {
     const [isOpen, setIsOpen] = useState(false); // Dropdown open/close state
     const [searchTerm, setSearchTerm] = useState(''); // State for the search term

@@ -18,20 +18,29 @@ function CurrencyConverter() {
     const [convertedAmount, setConvertedAmount] = useState(0.00); // Result of conversion
     const [exchangeRate, setExchangeRate] = useState(0); // Current exchange rate
     const [error, setError] = useState(null); // Error messages
+
+// Initialize the isDarkMode state based on the user's saved preference in local storage.
+// If the 'darkMode' value in local storage is 'true', set isDarkMode to true;
+// otherwise, set it to false. This allows the app to remember the user's theme choice
+// even after reloading the page.
     const [isDarkMode, setIsDarkMode] = useState(() => {
         const savedTheme = localStorage.getItem('darkMode');
         return savedTheme === 'true';
     });
+        
+// Initialize the favorites state with the user's saved favorites from local storage.
+// If there are no favorites saved in local storage, default to an array with 
+// common currency codes ['ETB', 'USD', 'CAD'].
+// JSON.parse is used to convert the stored string back into an array.
     const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || ['ETB', 'USD', 'CAD']);
     const [showResult, setShowResult] = useState(false); // Visibility of conversion result
 
     /**
      * Fetches exchange rates based on the selected base currency.
      * Updates the state with the fetched currencies and exchange rate.
-     * 
-     * @param {string} baseCurrency - The currency to use as the base for conversion.
-     */
+    */
 
+    // Fetch exchange rates for a given base currency and update state.
     const fetchedExchangeRates = async (baseCurrency = from) => {
         try {
             const response = await fetch(
@@ -60,7 +69,7 @@ function CurrencyConverter() {
         document.body.classList.toggle('dark', isDarkMode);
     }, [isDarkMode]);
 
-        /**
+    /**
      * Handles the conversion calculation when the convert button is pressed.
      * Updates the converted amount and shows the result.
      */

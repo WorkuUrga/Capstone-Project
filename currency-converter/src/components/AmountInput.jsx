@@ -25,6 +25,7 @@ function AmountInput({ label, amount, onAmountChange, isDarkMode }) {
                 placeholder="Enter Amount"
                 value={amount}
                 onChange={(e) => {
+                    // Retrieves the current value of that input element
                     const value = Number(e.target.value);
                     // Ensure that the value is non-negative
                     onAmountChange && onAmountChange(value >= 0 ? value : 0);
