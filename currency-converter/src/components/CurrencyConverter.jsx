@@ -32,7 +32,7 @@ function CurrencyConverter() {
 // If there are no favorites saved in local storage, default to an array with 
 // common currency codes ['ETB', 'USD', 'CAD'].
 // JSON.parse is used to convert the stored string back into an array.
-    const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || ['ETB', 'USD', 'CAD']);
+    const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || []);
     const [showResult, setShowResult] = useState(false); // Visibility of conversion result
 
     /**
