@@ -32,7 +32,9 @@ function CurrencyConverter() {
 // If there are no favorites saved in local storage, default to an array with 
 // common currency codes ['ETB', 'USD', 'CAD'].
 // JSON.parse is used to convert the stored string back into an array.
-    const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem('favorites')) || []);
+    const [fromFavorites, setFromFavorites] = useState(JSON.parse(localStorage.getItem('fromFavorites')) || []);
+    const [toFavorites, setToFavorites] = useState(JSON.parse(localStorage.getItem('toFavorites')) || []);
+
     const [showResult, setShowResult] = useState(false); // Visibility of conversion result
 
     /**
@@ -94,17 +96,29 @@ function CurrencyConverter() {
     /**
      * Toggles the favorite status of a currency and updates local storage.
      */
-    const toggleFavorite = (currency) => {
-        setFavorites(prevFavorites => {
+    const toggleFromFavorite = (currency) => {
+        setFromFavorites(prevFavorites => {
             const isFavorite = prevFavorites.includes(currency);
             const updatedFavorites = isFavorite
                 ? prevFavorites.filter(fav => fav !== currency)
                 : [currency, ...prevFavorites];
 
-            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));// Update local storage
+            localStorage.setItem('fromFavorites', JSON.stringify(updatedFavorites));// Update local storage
             return updatedFavorites;
         });
     };
+
+    const toggleToFavorite = (currency) => {
+        setToFavorites(prevFavorites => {
+            const isFavorite = prevFavorites.includes(currency);
+            const updatedFavorites = isFavorite 
+                ? prevFavorites.filter(fav => fav !== currency)
+                : [currency, ...prevFavorites];
+
+            localStorage.setItem('toFavorites', JSON.stringify(updatedFavorites));
+            return updatedFavorites
+        })
+    }
 
     return (
         <div className={`p-6 w-full max-w-4xl mx-auto ${isDarkMode ? 'bg-black bg-opacity-70 text-white' : 'bg-gradient-to-r from-blue-200 to-teal-200'} rounded-xl shadow-2xl`}>
@@ -140,11 +154,11 @@ function CurrencyConverter() {
             <div className="flex flex-col lg:flex-row items-center lg:gap-20 my-6 w-full lg:w-auto">
                 <CurrencySelector
                     label={<span className={`${isDarkMode ? 'text-white' : 'text-gray-700'}`}>From</span>}
-                    favorites={favorites}
+                    favorites={fromFavorites}
                     currencies={currencies}
                     selectedCurrency={from}
                     onCurrencyChange={(currency) => setFrom(currency)}
-                    toggleFavorite={toggleFavorite}
+                    toggleFavorite={toggleFromFavorite}
                     className="w-full bg-white text-gray-900 border border-blue-500 rounded-md px-4 py-2"
                 />
                 <button
@@ -155,11 +169,11 @@ function CurrencyConverter() {
                 </button>
                 <CurrencySelector
                     label={<span className={`${isDarkMode ? 'text-white' : 'text-gray-700'}`}>To</span>}
-                    favorites={favorites}
+                    favorites={toFavorites}
                     currencies={currencies}
                     selectedCurrency={to}
                     onCurrencyChange={(currency) => setTo(currency)}
-                    toggleFavorite={toggleFavorite}
+                    toggleFavorite={toggleToFavorite}
                     className="w-full bg-white text-gray-900 border border-green-500 rounded-md px-4 py-2"
                 />
             </div>
