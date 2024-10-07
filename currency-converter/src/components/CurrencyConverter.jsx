@@ -121,7 +121,7 @@ function CurrencyConverter() {
     }
 
     return (
-        <div className={`p-6 w-full max-w-4xl mx-auto ${isDarkMode ? 'bg-black bg-opacity-70 text-white' : 'bg-gradient-to-r from-blue-200 to-teal-200'} rounded-xl shadow-2xl`}>
+        <div className={`p-6 w-full sm:w-full md:w-full max-w-4xl mx-auto ${isDarkMode ? 'bg-black bg-opacity-70 text-white' : 'bg-gradient-to-r from-blue-200 to-teal-200'} rounded-xl shadow-2xl`}>
 
             {/* Dark mode toggle button */}
             <button
