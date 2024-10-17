@@ -3,7 +3,7 @@ import AmountInput from './AmountInput';
 import ConversionResult from './ConversionResult';
 import CurrencySelector from './CurrencySelector';
 import { IoMdSwap } from "react-icons/io";
-import { MdDarkMode } from "react-icons/md";
+import { FaMoon, FaSun } from "react-icons/fa"; // Import sun and moon icons
 
 /**
  * CurrencyConverter component allows users to convert amounts between currencies.
@@ -63,7 +63,7 @@ function CurrencyConverter() {
     // Fetch exchange rates whenever the 'from' currency changes
     useEffect(() => {
         fetchedExchangeRates();
-    }, [from]);
+    }, [from, to]);
 
     // Save dark mode preference to local storage and apply it to body class
     useEffect(() => {
@@ -121,20 +121,30 @@ function CurrencyConverter() {
     }
 
     return (
-        <div className={`p-6 w-full sm:w-full md:w-full max-w-4xl mx-auto ${isDarkMode ? 'bg-black bg-opacity-70 text-white' : 'bg-gradient-to-r from-blue-200 to-teal-200'} rounded-xl shadow-2xl`}>
+        <div className={`p-6 w-full max-w-4xl mx-auto ${isDarkMode ? 'bg-black bg-opacity-70 text-white' : 'bg-gradient-to-r from-blue-200 to-teal-200'} rounded-xl shadow-2xl`}>
 
             {/* Dark mode toggle button */}
             <button
                 onClick={() => setIsDarkMode(prev => !prev)}
-                className="text-white hover:bg-black hover:bg-opacity-50 px-4 py-2 rounded-md transition duration-300 mt-2"
+                className={` ${isDarkMode ? 'hover:bg-white hover:text-black' : 'hover:bg-gray-700 hover:bg-opacity-50 hover:text-white'}  px-4 py-2 rounded-md transition duration-300 mt-2`}
             >
-                <MdDarkMode />
+                {isDarkMode ? (
+                <div className='flex items-center gap-4'>
+                    <FaSun className="text-yellow-500 text-xl" />
+                    <h1>Light</h1> 
+                </div>// Sun icon for light mode
+            ) : (
+                <div className='flex items-center gap-4'>
+                    <FaMoon className="text-gray-700 text-xl" />
+                    <h1>Dark</h1>
+                </div>  // Moon icon for dark mode
+            )}
             </button>
             <h2 className={`my-4 font-bold ${isDarkMode ? 'text-white' : 'text-gray-600'} text-center text-3xl`}>Currency Converter</h2>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
             {/* Amount Input and Convert Button */}
-            <div className="flex flex-col sm:flex-row items-center mb-6 gap-4">
+            <div className="flex flex-col sm:flex-row items-center mb-6 gap-2">
                 <AmountInput
                     label={<span className={`${isDarkMode ? 'text-white' : 'text-gray-700'}`}>Amount</span>}
                     amount={amount}
@@ -151,7 +161,7 @@ function CurrencyConverter() {
             </div>
 
             {/* Currency Selectors and Swap Button */}
-            <div className="flex flex-col lg:flex-row items-center lg:gap-20 my-6 w-full lg:w-auto">
+            <div className="flex flex-col gap-2 mobile:flex-row items-center md:gap-20 lg:gap-20 my-6 w-full lg:w-auto">
                 <CurrencySelector
                     label={<span className={`${isDarkMode ? 'text-white' : 'text-gray-700'}`}>From</span>}
                     favorites={fromFavorites}
@@ -159,7 +169,7 @@ function CurrencyConverter() {
                     selectedCurrency={from}
                     onCurrencyChange={(currency) => setFrom(currency)}
                     toggleFavorite={toggleFromFavorite}
-                    className="w-full bg-white text-gray-900 border border-blue-500 rounded-md px-4 py-2"
+                    className="w-3/4 bg-white text-gray-900 border border-blue-500 rounded-md px-4 py-2"
                 />
                 <button
                     onClick={swap}
